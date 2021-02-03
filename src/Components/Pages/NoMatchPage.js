@@ -1,6 +1,6 @@
 const NoMatchPage = () => {
     return(
-        <div>NoMatchPage</div>
+        <h3>404 - Not found</h3>
     );
 }
 

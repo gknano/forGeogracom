@@ -1,6 +1,6 @@
 const FormPage = () => {
     return(
-        <div>FromPage</div>
+        <div>FormPage</div>
     );
 }
 
