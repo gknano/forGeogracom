@@ -12,8 +12,8 @@ const App = () => {
       <Header />
       <Switch>
         <Route exact path='/' component={MainPage} />
-        <Route path='/form' component={FormPage} />
-        <Route path='/collection' component={CollectionPage} />
+        <Route path='/formpage' component={FormPage} />
+        <Route path='/collectionpage' component={CollectionPage} />
         <Route component={NoMatchPage} />
       </Switch>
     </div>
