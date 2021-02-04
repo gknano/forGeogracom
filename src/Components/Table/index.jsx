@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { THead } from './head';
-import { setUserInfo, getUserInfo } from '../../utils/selectors';
+import { getUserInfo } from '../../utils/selectors';
 import styled from '@emotion/styled';
 import { CustomButton } from '../CustomButton';
+import { setUserInfoAction } from '../../store/Actions';
 
 const TableContainer = styled.table`
   overflow: hidden;
@@ -29,22 +31,13 @@ const TdContainer = styled.td`
 // создаем стилизованный td
 const BodyCell = ({ children }) => <TdContainer>{children}</TdContainer>;
 
-export const Table = () => {
-  // создаем переменную для чтения и изменения массива с пользователями
-  const [userInfo, _setUserInfo] = useState(getUserInfo());
-
-  // при изменении локальной переменной userInfo, сохраняем данные в localStorage
-  useEffect(() => {
-    setUserInfo(JSON.stringify(userInfo));
-  }, [userInfo]);
-
+export const TableView = ({ userInfo, setUserInfo }) => {
   // слушаем событие onClick на кнопке и прокидываем индекс элемента
   const onDeleteHandler = (e, i) => {
     // удаляем элемент из массива во индексу
     userInfo.splice(i, 1);
-    // сохраняем массив с пользователями в локальную переменную
     // если не создавать новый массив, данные не будут динамически обновляться на странице
-    _setUserInfo([...userInfo]);
+    setUserInfo(userInfo);
   };
   return (
     <TableContainer>
@@ -65,3 +58,15 @@ export const Table = () => {
     </TableContainer>
   );
 };
+
+const mapDispatchToProps = {
+  setUserInfo: setUserInfoAction,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: getUserInfo(state),
+  };
+};
+
+export const Table = connect(mapStateToProps, mapDispatchToProps)(TableView);
